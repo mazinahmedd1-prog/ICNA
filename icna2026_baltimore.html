@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>ICNA 2026 — Baltimore Road Trip</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f7f2;
+  --surface: #eaf0e6;
+  --card: #ffffff;
+  --border: #d4dece;
+  --border2: #bfcdb8;
+  --green: #1e8a4a;
+  --green-dim: #a8d8bc;
+  --gold: #b06a00;
+  --gold-dim: #f5d99a;
+  --coral: #c94f2c;
+  --blue: #1a5fa8;
+  --muted: #7a8f74;
+  --text: #1e2b1a;
+  --text2: #4d6147;
+  --white: #1e2b1a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:light only}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── BG TEXTURE ── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%, rgba(30,138,74,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 85%, rgba(176,106,0,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(26,95,168,0.04) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── WRAPPER ── */
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px}
+
+/* ── HERO ── */
+.hero{
+  padding:72px 0 56px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:.18em;color:var(--green);
+  text-transform:uppercase;margin-bottom:28px;
+  opacity:0;animation:fadeUp .5s ease forwards .1s;
+}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--green);display:block}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,9vw,96px);
+  font-weight:900;line-height:.92;
+  color:var(--white);
+  letter-spacing:-.02em;
+  opacity:0;animation:fadeUp .6s ease forwards .2s;
+}
+.hero-title .city{
+  color:var(--green);
+  display:block;
+}
+.hero-title .year{
+  font-size:clamp(28px,4vw,48px);
+  font-weight:700;
+  color:var(--muted);
+  letter-spacing:.04em;
+  font-family:'DM Mono',monospace;
+}
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:36px;
+  opacity:0;animation:fadeUp .6s ease forwards .35s;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:500;letter-spacing:.04em;
+  padding:6px 14px;border-radius:100px;
+  border:1px solid;
+}
+.pill-green{color:#1e8a4a;border-color:#a8d8bc;background:rgba(30,138,74,.1)}
+.pill-gold{color:#b06a00;border-color:#f5d99a;background:rgba(176,106,0,.1)}
+.pill-blue{color:#1a5fa8;border-color:rgba(26,95,168,.3);background:rgba(26,95,168,.08)}
+.pill-coral{color:#c94f2c;border-color:rgba(201,79,44,.3);background:rgba(201,79,44,.08)}
+.hero-verse{
+  margin-top:40px;padding-top:28px;border-top:1px solid var(--border);
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-style:italic;color:var(--text2);
+  opacity:0;animation:fadeUp .6s ease forwards .45s;
+}
+.hero-verse span{color:var(--green);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;display:block;margin-top:4px;letter-spacing:.08em}
+
+/* ── NAV TABS ── */
+.tabs{
+  display:flex;gap:2px;padding:20px 0 0;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;
+  background:rgba(244,247,242,.94);
+  backdrop-filter:blur(12px);
+  margin:0 -24px;padding:20px 24px 0;
+}
+.tab{
+  font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);padding:8px 16px;border-radius:6px 6px 0 0;
+  cursor:pointer;border:none;background:none;
+  transition:color .2s,background .2s;
+  border-bottom:2px solid transparent;
+  font-family:'DM Mono',monospace;
+}
+.tab:hover{color:var(--text2)}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* ── SECTION ── */
+.section{display:none;padding-top:40px}
+.section.active{display:block}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:700;
+  color:var(--white);margin-bottom:6px;
+}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:32px}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0}
+.titem{display:flex;gap:16px;align-items:stretch}
+.t-left{
+  display:flex;flex-direction:column;align-items:center;
+  flex-shrink:0;width:40px;
+}
+.t-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--green);background:var(--bg);
+  flex-shrink:0;margin-top:2px;position:relative;z-index:1;
+}
+.t-dot.active-day{background:var(--green)}
+.t-line{width:1px;flex:1;background:var(--border2);margin:6px 0}
+.t-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:20px 24px;margin-bottom:16px;flex:1;
+  transition:border-color .2s;
+}
+.t-card:hover{border-color:var(--border2)}
+.t-date{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:.1em;color:var(--green);
+  text-transform:uppercase;margin-bottom:4px;
+}
+.t-title{font-size:17px;font-weight:500;color:var(--white);margin-bottom:10px}
+.t-items{display:flex;flex-direction:column;gap:5px}
+.t-item{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:13px;color:var(--text2);
+}
+.t-item::before{
+  content:'→';color:var(--green);font-size:11px;flex-shrink:0;margin-top:2px;
+}
+.t-tag{
+  display:inline-block;font-size:10px;font-weight:500;
+  padding:2px 8px;border-radius:100px;margin-left:6px;
+  vertical-align:middle;
+}
+.tag-drive{background:rgba(26,95,168,.12);color:#1a5fa8}
+.tag-convention{background:rgba(30,138,74,.12);color:#1e8a4a}
+.tag-food{background:rgba(176,106,0,.12);color:#b06a00}
+.tag-explore{background:rgba(201,79,44,.12);color:#c94f2c}
+
+/* ── CREW GRID ── */
+.crew-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;margin-bottom:32px;
+}
+.crew-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 16px;
+  display:flex;align-items:center;gap:14px;
+  transition:border-color .2s,transform .15s;
+  cursor:default;
+}
+.crew-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.crew-card.maybe{opacity:.65;border-style:dashed}
+.avatar{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:500;flex-shrink:0;
+  font-family:'DM Mono',monospace;
+}
+.crew-info{}
+.crew-name{font-size:14px;font-weight:500;color:var(--white)}
+.crew-status{font-size:11px;color:var(--muted);margin-top:1px}
+.crew-status.conf{color:var(--green)}
+.crew-status.maybe-s{color:var(--gold)}
+.crew-van{font-size:10px;color:var(--muted);margin-top:3px;font-family:'DM Mono',monospace}
+
+/* van split visual */
+.van-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.van-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 20px;
+}
+.van-label{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:.1em;color:var(--blue);text-transform:uppercase;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.van-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);display:block}
+.van-member{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--text2);padding:5px 0;
+  border-bottom:1px solid var(--border);
+}
+.van-member:last-child{border-bottom:none}
+.van-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* ── COST TABLE ── */
+.cost-section{margin-bottom:32px}
+.cost-header{
+  display:grid;grid-template-columns:1fr auto auto;
+  gap:12px;align-items:center;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:.1em;color:var(--muted);text-transform:uppercase;
+  padding:0 20px 10px;border-bottom:1px solid var(--border);margin-bottom:4px;
+}
+.cost-row{
+  display:grid;grid-template-columns:1fr auto auto;
+  gap:12px;align-items:center;
+  padding:13px 20px;border-bottom:1px solid var(--border);
+  background:var(--card);
+  transition:background .15s;
+}
+.cost-row:first-of-type{border-radius:12px 12px 0 0}
+.cost-row:last-of-type{border-bottom:none;border-radius:0 0 12px 12px}
+.cost-row:hover{background:var(--surface)}
+.cost-name{font-size:14px;color:var(--text)}
+.cost-note{font-size:11px;color:var(--muted);margin-top:2px}
+.cost-total{font-size:14px;font-weight:500;color:var(--white);text-align:right;white-space:nowrap}
+.cost-pp{font-size:12px;color:var(--text2);text-align:right;white-space:nowrap}
+.total-bar{
+  background:rgba(30,138,74,.08);border:1px solid var(--green-dim);
+  border-radius:12px;padding:18px 20px;margin-top:12px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.total-bar-label{font-size:13px;color:var(--text2)}
+.total-bar-nums{text-align:right}
+.total-big{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green)}
+.total-small{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* stat cards */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 16px;
+}
+.stat-label{font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace;letter-spacing:.06em}
+.stat-val{font-size:24px;font-weight:500;color:var(--text)}
+.stat-note{font-size:11px;color:var(--text2);margin-top:3px}
+
+/* ── LOGISTICS ── */
+.logistics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.log-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:20px;
+}
+.log-title{
+  font-size:13px;font-weight:500;color:var(--text);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.log-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.log-item{
+  font-size:12px;color:var(--text2);
+  padding:5px 0;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
+}
+.log-item:last-child{border-bottom:none}
+.log-val{color:var(--text);font-weight:500;text-align:right;flex-shrink:0}
+.alert-box{
+  background:rgba(176,106,0,.07);border:1px solid var(--gold-dim);
+  border-radius:12px;padding:16px 20px;margin-bottom:16px;
+  font-size:13px;color:var(--text2);line-height:1.7;
+}
+.alert-box strong{color:var(--gold)}
+.info-box{
+  background:rgba(26,95,168,.07);border:1px solid rgba(26,95,168,.25);
+  border-radius:12px;padding:16px 20px;margin-bottom:16px;
+  font-size:13px;color:var(--text2);line-height:1.7;
+}
+.info-box strong{color:var(--blue)}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:0}
+.check-group{margin-bottom:24px}
+.check-group-title{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);
+}
+.check-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:opacity .15s;
+  user-select:none;
+}
+.check-item:last-child{border-bottom:none}
+.check-item.done .check-label{
+  text-decoration:line-through;color:var(--muted);
+}
+.check-box{
+  width:20px;height:20px;border-radius:5px;
+  border:1.5px solid var(--border2);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .15s,background .15s;margin-top:1px;
+}
+.check-item.done .check-box{
+  background:var(--green);border-color:var(--green);
+}
+.check-box svg{display:none}
+.check-item.done .check-box svg{display:block}
+.check-label{font-size:14px;color:var(--text);flex:1}
+.check-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.check-priority{
+  font-size:10px;font-weight:500;padding:2px 8px;border-radius:100px;
+  flex-shrink:0;margin-top:2px;
+}
+.p-urgent{background:rgba(201,79,44,.12);color:#c94f2c}
+.p-soon{background:rgba(176,106,0,.12);color:#b06a00}
+.p-later{background:rgba(122,143,116,.18);color:#4d6147}
+.progress-bar{
+  height:4px;background:var(--border);border-radius:100px;
+  margin-bottom:24px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;background:var(--green);border-radius:100px;
+  transition:width .4s ease;
+}
+
+/* ── ANIM ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.section.active > *{
+  animation:fadeUp .4s ease both;
+}
+.section.active > *:nth-child(2){animation-delay:.05s}
+.section.active > *:nth-child(3){animation-delay:.1s}
+.section.active > *:nth-child(4){animation-delay:.15s}
+.section.active > *:nth-child(5){animation-delay:.2s}
+.section.active > *:nth-child(6){animation-delay:.25s}
+
+/* ── FOOTER ── */
+.footer{
+  margin-top:60px;padding-top:24px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.06em;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .hero-title{font-size:52px}
+  .van-split{grid-template-columns:1fr}
+  .logistics-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .cost-header,.cost-row{grid-template-columns:1fr auto}
+  .cost-pp{display:none}
+  .tabs{gap:0;overflow-x:auto;padding-bottom:0}
+  .tab{font-size:10px;padding:6px 10px;white-space:nowrap}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">ICNA-MAS 51st Annual Convention</div>
+    <h1 class="hero-title">
+      Road Trip to
+      <span class="city">Baltimore</span>
+      <span class="year">// 2026</span>
+    </h1>
+    <div class="hero-meta">
+      <span class="pill pill-green">May 22–25, 2026</span>
+      <span class="pill pill-gold">8 brothers</span>
+      <span class="pill pill-blue">Portland ME → Baltimore MD</span>
+      <span class="pill pill-coral">~7 hr drive</span>
+    </div>
+    <div class="hero-verse">
+      "And hold firmly to the rope of Allah all together and do not become divided."
+      <span>— Surah Al-Imran 3:103</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="tabs">
+    <button class="tab active" data-tab="timeline">Timeline</button>
+    <button class="tab" data-tab="crew">Crew & Vans</button>
+    <button class="tab" data-tab="costs">Costs</button>
+    <button class="tab" data-tab="logistics">Logistics</button>
+    <button class="tab" data-tab="checklist">Checklist</button>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section active" id="timeline">
+    <h2 class="section-title">Trip timeline</h2>
+    <p class="section-sub">Portland, ME → Baltimore Convention Center — 4 days, all of it barakah insha'allah</p>
+    <div class="timeline">
+
+      <div class="titem">
+        <div class="t-left">
+          <div class="t-dot"></div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-date">Friday · May 22</div>
+          <div class="t-title">Departure Day — Drive Down</div>
+          <div class="t-items">
+            <div class="t-item">Leave Portland ~6–7 AM <span class="t-tag tag-drive">~7 hr drive</span></div>
+            <div class="t-item">~420 miles via I-95 S through Boston, NYC corridor</div>
+            <div class="t-item">Recommended rest stop: New Haven, CT or Newark, DE area</div>
+            <div class="t-item">Arrive Baltimore afternoon — check in to Airbnb / hotel</div>
+            <div class="t-item">Explore Inner Harbor, grab halal dinner <span class="t-tag tag-food">food</span></div>
+            <div class="t-item">Early rest — convention opens tomorrow <span class="t-tag tag-convention">prep</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="titem">
+        <div class="t-left">
+          <div class="t-dot active-day"></div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-date">Saturday · May 23 — Convention Day 1</div>
+          <div class="t-title">Bazaar Opens · Main Sessions Begin</div>
+          <div class="t-items">
+            <div class="t-item">Fajr at hotel / closest masjid</div>
+            <div class="t-item">Convention Center doors open 9 AM <span class="t-tag tag-convention">convention</span></div>
+            <div class="t-item">Bazaar open 10 AM — 250+ exhibitors, halal food vendors</div>
+            <div class="t-item">100+ breakout sessions — scholars, workshops, youth track</div>
+            <div class="t-item">YM Conference — brotherhood panels</div>
+            <div class="t-item">Evening: night sessions, group dinner <span class="t-tag tag-food">food</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="titem">
+        <div class="t-left">
+          <div class="t-dot active-day"></div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-date">Sunday · May 24 — Convention Day 2</div>
+          <div class="t-title">Full Program · Free Health Fair</div>
+          <div class="t-items">
+            <div class="t-item">Full session day — Dhur, Asr, Maghrib, Isha in congregation <span class="t-tag tag-convention">convention</span></div>
+            <div class="t-item">Free Health Fair 2–8 PM (blood donation, clinical services)</div>
+            <div class="t-item">Tech Talks + Hack-a-Thon sessions available</div>
+            <div class="t-item">Poetry Slam (open to all ages) </div>
+            <div class="t-item">Evening: Fells Point, Little Italy, or Inner Harbor hangout <span class="t-tag tag-explore">explore</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="titem">
+        <div class="t-left">
+          <div class="t-dot"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-date">Monday · May 25 — Convention Day 3 + Return</div>
+          <div class="t-title">Final Sessions · Afternoon Departure</div>
+          <div class="t-items">
+            <div class="t-item">Morning sessions · last bazaar run — Bazaar closes 3 PM <span class="t-tag tag-convention">convention</span></div>
+            <div class="t-item">Check out of lodging by 11 AM (or late checkout if available)</div>
+            <div class="t-item">Depart Baltimore ~2–3 PM <span class="t-tag tag-drive">drive</span></div>
+            <div class="t-item">Road stop for Maghrib + dinner</div>
+            <div class="t-item">Arrive Portland ~9–10 PM — الحمد لله</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CREW -->
+  <div class="section" id="crew">
+    <h2 class="section-title">The crew</h2>
+    <p class="section-sub">8 brothers · 4 confirmed · 4 maybes — dashed = still deciding</p>
+
+    <div class="crew-grid">
+      <div class="crew-card">
+        <div class="avatar" style="background:rgba(30,138,74,.15);color:#1e8a4a">MZ</div>
+        <div class="crew-info">
+          <div class="crew-name">Mazin</div>
+          <div class="crew-status conf">Confirmed ✓</div>
+          <div class="crew-van">Van 1 · Driver</div>
+        </div>
+      </div>
+      <div class="crew-card">
+        <div class="avatar" style="background:rgba(26,95,168,.15);color:#1a5fa8">AN</div>
+        <div class="crew-info">
+          <div class="crew-name">Andy</div>
+          <div class="crew-status conf">Confirmed ✓</div>
+          <div class="crew-van">Van 1</div>
+        </div>
+      </div>
+      <div class="crew-card">
+        <div class="avatar" style="background:rgba(130,80,180,.15);color:#6b35b0">EY</div>
+        <div class="crew-info">
+          <div class="crew-name">Eyad</div>
+          <div class="crew-status conf">Confirmed ✓</div>
+          <div class="crew-van">Van 2 · Driver</div>
+        </div>
+      </div>
+      <div class="crew-card">
+        <div class="avatar" style="background:rgba(201,79,44,.15);color:#c94f2c">AB</div>
+        <div class="crew-info">
+          <div class="crew-name">Ahmed Beshir</div>
+          <div class="crew-status conf">Confirmed ✓</div>
+          <div class="crew-van">Van 2</div>
+        </div>
+      </div>
+      <div class="crew-card maybe">
+        <div class="avatar" style="background:rgba(176,106,0,.15);color:#b06a00">MU</div>
+        <div class="crew-info">
+          <div class="crew-name">Musa</div>
+          <div class="crew-status maybe-s">Maybe ◌</div>
+          <div class="crew-van">TBD</div>
+        </div>
+      </div>
+      <div class="crew-card maybe">
+        <div class="avatar" style="background:rgba(30,138,74,.12);color:#1e8a4a">AB</div>
+        <div class="crew-info">
+          <div class="crew-name">Abbas</div>
+          <div class="crew-status maybe-s">Maybe ◌</div>
+          <div class="crew-van">TBD</div>
+        </div>
+      </div>
+      <div class="crew-card maybe">
+        <div class="avatar" style="background:rgba(201,79,44,.12);color:#c94f2c">AL</div>
+        <div class="crew-info">
+          <div class="crew-name">Ali Arsenal</div>
+          <div class="crew-status maybe-s">Maybe ◌</div>
+          <div class="crew-van">TBD</div>
+        </div>
+      </div>
+      <div class="crew-card maybe">
+        <div class="avatar" style="background:rgba(122,143,116,.2);color:#4d6147">+1</div>
+        <div class="crew-info">
+          <div class="crew-name">+1 TBD</div>
+          <div class="crew-status maybe-s">Maybe ◌</div>
+          <div class="crew-van">TBD</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:500;color:var(--white);margin-bottom:14px">Suggested van split</h3>
+    <div class="van-split">
+      <div class="van-box">
+        <div class="van-label">Van 1</div>
+        <div class="van-member"><div class="van-dot" style="background:#1e8a4a"></div>Mazin <span style="font-size:10px;color:var(--muted);margin-left:auto">driver</span></div>
+        <div class="van-member"><div class="van-dot" style="background:#1a5fa8"></div>Andy</div>
+        <div class="van-member"><div class="van-dot" style="background:#b06a00;opacity:.7"></div>Musa <span style="font-size:10px;color:var(--gold);margin-left:auto">maybe</span></div>
+        <div class="van-member"><div class="van-dot" style="background:#6b35b0;opacity:.7"></div>Abbas <span style="font-size:10px;color:var(--gold);margin-left:auto">maybe</span></div>
+      </div>
+      <div class="van-box">
+        <div class="van-label" style="color:var(--coral);border-color:rgba(201,79,44,.25)">Van 2</div>
+        <div class="van-member"><div class="van-dot" style="background:#6b35b0"></div>Eyad <span style="font-size:10px;color:var(--muted);margin-left:auto">driver</span></div>
+        <div class="van-member"><div class="van-dot" style="background:#c94f2c"></div>Ahmed Beshir</div>
+        <div class="van-member"><div class="van-dot" style="background:#c94f2c;opacity:.7"></div>Ali Arsenal <span style="font-size:10px;color:var(--gold);margin-left:auto">maybe</span></div>
+        <div class="van-member"><div class="van-dot" style="background:#7a8f74;opacity:.7"></div>+1 TBD <span style="font-size:10px;color:var(--gold);margin-left:auto">maybe</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COSTS -->
+  <div class="section" id="costs">
+    <h2 class="section-title">Cost breakdown</h2>
+    <p class="section-sub">All estimates. Confirm tickets at icnaconvention.org. Book vans + lodging ASAP.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Per person (low)</div>
+        <div class="stat-val" style="color:var(--green)">~$290</div>
+        <div class="stat-note">Best case, 8 people, Airbnb</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Per person (high)</div>
+        <div class="stat-val" style="color:var(--gold)">~$425</div>
+        <div class="stat-note">Hotel, peak MDW rates</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Full group (est.)</div>
+        <div class="stat-val">~$2,700</div>
+        <div class="stat-note">8 people · all-in</div>
+      </div>
+    </div>
+
+    <div class="cost-header">
+      <div>Item</div>
+      <div>Total est.</div>
+      <div>Per person</div>
+    </div>
+
+    <div class="cost-row">
+      <div>
+        <div class="cost-name">Convention registration × 8</div>
+        <div class="cost-note">Check icnaconvention.org — early bird pricing typically $75–$100</div>
+      </div>
+      <div class="cost-total">$600–$800</div>
+      <div class="cost-pp">$75–100</div>
+    </div>
+    <div class="cost-row">
+      <div>
+        <div class="cost-name">2× 8-passenger van rentals (4 days)</div>
+        <div class="cost-note">~$80–120/van/day from Portland. Book now — MDW weekend sells out</div>
+      </div>
+      <div class="cost-total">$640–$960</div>
+      <div class="cost-pp">$80–120</div>
+    </div>
+    <div class="cost-row">
+      <div>
+        <div class="cost-name">Gas — round trip (~840 mi · 2 vans)</div>
+        <div class="cost-note">~20 mpg · $3/gal avg · split 8 ways</div>
+      </div>
+      <div class="cost-total">~$185</div>
+      <div class="cost-pp">~$23</div>
+    </div>
+    <div class="cost-row">
+      <div>
+        <div class="cost-name">Airbnb — whole home (3 nights)</div>
+        <div class="cost-note">$150–250/night for 8 people near Inner Harbor. Book ASAP.</div>
+      </div>
+      <div class="cost-total">$450–$750</div>
+      <div class="cost-pp">$56–94</div>
+    </div>
+    <div class="cost-row" style="border-radius:0 0 12px 12px">
+      <div>
+        <div class="cost-name">Food & misc (3 days)</div>
+        <div class="cost-note">Halal vendors on-site + dinners out. Bazaar spending varies.</div>
+      </div>
+      <div class="cost-total">$480–$720</div>
+      <div class="cost-pp">$60–90</div>
+    </div>
+
+    <div class="total-bar">
+      <div>
+        <div class="total-bar-label">Estimated total per person</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">Excluding personal bazaar spending</div>
+      </div>
+      <div class="total-bar-nums">
+        <div class="total-big">$290–$425</div>
+        <div class="total-small">$2,320–$3,400 full group</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LOGISTICS -->
+  <div class="section" id="logistics">
+    <h2 class="section-title">Logistics</h2>
+    <p class="section-sub">Everything you need to know before you leave Portland.</p>
+
+    <div class="alert-box">
+      <strong>⚠ Book now.</strong> Memorial Day weekend is peak demand — Baltimore hotel and Airbnb inventory near the convention center disappears fast. The 2026 convention is May 23–25 (confirmed). Registration deadline for changes was April 30, 2026, so register ASAP at <strong>icnaconvention.org</strong>.
+    </div>
+
+    <div class="logistics-grid">
+      <div class="log-card">
+        <div class="log-title"><div class="log-dot" style="background:#4ade80"></div>Convention</div>
+        <div class="log-item"><span>Venue</span><span class="log-val">Baltimore Convention Center</span></div>
+        <div class="log-item"><span>Address</span><span class="log-val">1 W Pratt St, Baltimore MD</span></div>
+        <div class="log-item"><span>Doors open</span><span class="log-val">9 AM daily</span></div>
+        <div class="log-item"><span>Bazaar hours</span><span class="log-val">Sat 10 AM – Mon 3 PM</span></div>
+        <div class="log-item"><span>WiFi</span><span class="log-val">Free at venue</span></div>
+        <div class="log-item"><span>Jumu'ah</span><span class="log-val">On-site congregation daily</span></div>
+      </div>
+      <div class="log-card">
+        <div class="log-title"><div class="log-dot" style="background:#60a5fa"></div>The Drive</div>
+        <div class="log-item"><span>Distance</span><span class="log-val">~420 miles each way</span></div>
+        <div class="log-item"><span>Drive time</span><span class="log-val">~7 hrs (no traffic)</span></div>
+        <div class="log-item"><span>Depart</span><span class="log-val">Fri May 22, 6–7 AM</span></div>
+        <div class="log-item"><span>Return depart</span><span class="log-val">Mon May 25, ~2–3 PM</span></div>
+        <div class="log-item"><span>Tolls (est.)</span><span class="log-val">~$20–30 per van</span></div>
+        <div class="log-item"><span>E-ZPass?</span><span class="log-val">Confirm with rental co.</span></div>
+      </div>
+      <div class="log-card">
+        <div class="log-title"><div class="log-dot" style="background:#f5c842"></div>Lodging options</div>
+        <div class="log-item"><span>Best option</span><span class="log-val">Airbnb whole home</span></div>
+        <div class="log-item"><span>Price range</span><span class="log-val">$150–250/night</span></div>
+        <div class="log-item"><span>Nights</span><span class="log-val">3 (Fri–Mon)</span></div>
+        <div class="log-item"><span>Hotel alt.</span><span class="log-val">2 rooms · $100–170/night</span></div>
+        <div class="log-item"><span>ICNA official</span><span class="log-val">conventionhousing@baltimore.org</span></div>
+        <div class="log-item"><span>Area tip</span><span class="log-val">Inner Harbor or Fells Point</span></div>
+      </div>
+      <div class="log-card">
+        <div class="log-title"><div class="log-dot" style="background:#ff7c5c"></div>Vans</div>
+        <div class="log-item"><span>Need</span><span class="log-val">2× 8-passenger vans</span></div>
+        <div class="log-item"><span>Pickup</span><span class="log-val">Portland Intl Airport (PWM)</span></div>
+        <div class="log-item"><span>Duration</span><span class="log-val">4 days (Fri–Mon)</span></div>
+        <div class="log-item"><span>Price est.</span><span class="log-val">$80–120/van/day</span></div>
+        <div class="log-item"><span>Book via</span><span class="log-val">Enterprise / National / Hertz</span></div>
+        <div class="log-item"><span>Under 25?</span><span class="log-val">+$25–35/day surcharge</span></div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Halal food in Baltimore:</strong> Baltimore has a solid halal scene. On-site at the convention there are halal food vendors. Nearby: check Google Maps for "halal restaurant Baltimore Inner Harbor" — there are options in Little Italy and around the convention center within walking distance.
+    </div>
+
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="section" id="checklist">
+    <h2 class="section-title">Trip checklist</h2>
+    <p class="section-sub">Tap an item to mark it done. Track the crew's prep.</p>
+
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:-18px;margin-bottom:24px;font-family:'DM Mono',monospace" id="progress-label">0 / 0 complete</div>
+
+    <div class="check-group">
+      <div class="check-group-title">Do this week (urgent)</div>
+
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Register for ICNA 2026 at icnaconvention.org</div>
+          <div class="check-sub">All 8 attendees — confirm pricing, check for early bird discount</div>
+        </div>
+        <div class="check-priority p-urgent">Urgent</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Book 2× 8-passenger vans from Portland</div>
+          <div class="check-sub">Enterprise / National / Hertz at PWM Airport — Fri May 22 pickup, Mon May 25 return</div>
+        </div>
+        <div class="check-priority p-urgent">Urgent</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Book Airbnb near Baltimore Convention Center</div>
+          <div class="check-sub">3 nights (Fri–Mon) · Inner Harbor or Fells Point area · 8-person capacity</div>
+        </div>
+        <div class="check-priority p-urgent">Urgent</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Lock in the maybes — Musa, Abbas, Ali Arsenal, +1</div>
+          <div class="check-sub">Need final headcount to split costs and book correctly</div>
+        </div>
+        <div class="check-priority p-urgent">Urgent</div>
+      </div>
+
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-title">Before you leave</div>
+
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Collect money from everyone for shared costs</div>
+          <div class="check-sub">Venmo / Cash app — van, gas, lodging split upfront</div>
+        </div>
+        <div class="check-priority p-soon">Soon</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Plan the road trip playlist / Quran recitation rotation</div>
+          <div class="check-sub">7 hours each way — someone's aux cord is going to be contested</div>
+        </div>
+        <div class="check-priority p-soon">Soon</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Download ICNACON 2025 app (2026 app TBD)</div>
+          <div class="check-sub">Sessions, speakers, schedule — plan which talks to hit</div>
+        </div>
+        <div class="check-priority p-soon">Soon</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Confirm driver's licenses + van insurance</div>
+          <div class="check-sub">Mazin (Van 1) + Eyad (Van 2) — check rental requirements</div>
+        </div>
+        <div class="check-priority p-soon">Soon</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Pack: prayer rug, Quran, comfortable convention-ready clothes</div>
+          <div class="check-sub">Dress modestly — the convention center is huge and you'll walk a lot</div>
+        </div>
+        <div class="check-priority p-later">Before trip</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Pack road trip snacks — halal of course</div>
+          <div class="check-sub">7 hours is long. Dates, chips, drinks, the works.</div>
+        </div>
+        <div class="check-priority p-later">Before trip</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1">
+          <div class="check-label">Set a 5 AM alarm on May 22</div>
+          <div class="check-sub">Fajr + leave by 6–7 AM to beat Boston rush hour traffic</div>
+        </div>
+        <div class="check-priority p-later">Before trip</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>ICNA-MAS 2026 · Baltimore · Portland, ME</span>
+    <span>بسم الله الرحمن الرحيم</span>
+  </div>
+
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Checklist
+function toggleCheck(item) {
+  item.classList.toggle('done');
+  updateProgress();
+}
+
+function updateProgress() {
+  const items = document.querySelectorAll('.check-item');
+  const done = document.querySelectorAll('.check-item.done');
+  const pct = items.length ? Math.round((done.length / items.length) * 100) : 0;
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = done.length + ' / ' + items.length + ' complete';
+}
+
+updateProgress();
+</script>
+
+</body>
+</html>
