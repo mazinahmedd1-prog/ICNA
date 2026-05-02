@@ -1,2 +1,0 @@
-# ICNA
-Icna trip organiser
